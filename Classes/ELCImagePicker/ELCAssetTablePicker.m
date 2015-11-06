@@ -35,7 +35,11 @@
 {
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setAllowsSelection:NO];
-
+    
+    UIEdgeInsets contentInset = self.tableView.contentInset;
+    contentInset.bottom += 4;
+    self.tableView.contentInset = contentInset;
+    
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
     self.elcAssets = tempArray;
 	
