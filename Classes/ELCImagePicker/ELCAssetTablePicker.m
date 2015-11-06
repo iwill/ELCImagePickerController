@@ -26,7 +26,7 @@
     if (self) {
         //Sets a reasonable default bigger then 0 for columns
         //So that we don't have a divide by 0 scenario
-        self.columns = 4;
+        self.columns = ELC_imagesPerLine;
     }
     return self;
 }
@@ -35,11 +35,7 @@
 {
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setAllowsSelection:NO];
-    
-    UIEdgeInsets contentInset = self.tableView.contentInset;
-    contentInset.bottom += 4;
-    self.tableView.contentInset = contentInset;
-    
+
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
     self.elcAssets = tempArray;
 	
@@ -170,7 +166,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (self.columns <= 0) { //Sometimes called before we know how many columns we have
-        self.columns = 4;
+        self.columns = ELC_imagesPerLine;
     }
     NSInteger numRows = ceil([self.elcAssets count] / (float)self.columns);
     return numRows;
@@ -201,7 +197,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 79;
+	return ELC_imageMargin + ELC_imageSizeForWidth(CGRectGetWidth(tableView.bounds));
 }
 
 - (int)totalSelectedAssets

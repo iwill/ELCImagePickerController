@@ -11,6 +11,7 @@
 #import "ELCImagePickerController.h"
 #import "ELCAlbumPickerController.h"
 #import "ELCAssetTablePicker.h"
+#import "ELCAssetCell.h"
 
 @interface ELCImagePickerDemoViewController ()
 
@@ -25,7 +26,7 @@
 - (IBAction)launchController
 {
 	ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] init];
-    elcPicker.maximumImagesCount = 4;
+    elcPicker.maximumImagesCount = ELC_imagesPerLine;
 	elcPicker.imagePickerDelegate = self;
     
     [self presentViewController:elcPicker animated:YES completion:nil];

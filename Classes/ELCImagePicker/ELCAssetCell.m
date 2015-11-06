@@ -75,14 +75,11 @@
 
 - (void)cellTapped:(UITapGestureRecognizer *)tapRecognizer
 {
-    NSInteger imagesPerLine = 4;
-    CGFloat margin = 4;
-    CGFloat imageWidth = (self.bounds.size.width - (imagesPerLine + 1) * margin) / imagesPerLine;
-    
+    CGFloat imageSize = ELC_imageSizeForWidth(CGRectGetWidth(self.bounds));
+	CGRect frame = CGRectMake(ELC_imageMargin, ELC_imageMargin, imageSize, imageSize);
+	
     CGPoint point = [tapRecognizer locationInView:self];
     
-	CGRect frame = CGRectMake(margin, margin, imageWidth, imageWidth);
-	
 	for (int i = 0; i < [_rowAssets count]; ++i) {
         if (CGRectContainsPoint(frame, point)) {
             ELCAsset *asset = [_rowAssets objectAtIndex:i];
@@ -91,17 +88,14 @@
             overlayView.hidden = !asset.selected;
             break;
         }
-        frame.origin.x = frame.origin.x + frame.size.width + margin;
+        frame.origin.x = frame.origin.x + frame.size.width + ELC_imageMargin;
     }
 }
 
 - (void)layoutSubviews
 {
-    NSInteger imagesPerLine = 4;
-    CGFloat margin = 4;
-    CGFloat imageWidth = (self.bounds.size.width - (imagesPerLine + 1) * margin) / imagesPerLine;
-    
-	CGRect frame = CGRectMake(margin, margin, imageWidth, imageWidth);
+    CGFloat imageSize = ELC_imageSizeForWidth(CGRectGetWidth(self.bounds));
+    CGRect frame = CGRectMake(ELC_imageMargin, ELC_imageMargin, imageSize, imageSize);
 	
 	for (int i = 0; i < [_rowAssets count]; ++i) {
 		UIImageView *imageView = [_imageViewArray objectAtIndex:i];
@@ -112,7 +106,7 @@
         [overlayView setFrame:frame];
         [self addSubview:overlayView];
 		
-		frame.origin.x = frame.origin.x + frame.size.width + margin;
+		frame.origin.x = frame.origin.x + frame.size.width + ELC_imageMargin;
 	}
 }
 

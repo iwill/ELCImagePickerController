@@ -23,7 +23,7 @@
     
     self = [super initWithRootViewController:albumPicker];
     if (self) {
-        self.maximumImagesCount = 4;
+        self.maximumImagesCount = ELC_imagesPerLine;
         [albumPicker setParent:self];
     }
     return self;
@@ -33,7 +33,7 @@
 {
     self = [super initWithRootViewController:rootViewController];
     if (self) {
-        self.maximumImagesCount = 4;
+        self.maximumImagesCount = ELC_imagesPerLine;
     }
     return self;
 }
