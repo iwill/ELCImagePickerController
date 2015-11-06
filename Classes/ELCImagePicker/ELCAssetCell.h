@@ -10,7 +10,7 @@
 #define ELC_imagesPerLine   4
 #define ELC_imageMargin     4.0
 #define ELC_imageSizeForWidth(viewWidth) ({ \
-    (viewWidth - (ELC_imagesPerLine + 1) * ELC_imageMargin) / ELC_imagesPerLine; \
+    round(viewWidth - (ELC_imagesPerLine + 1) * ELC_imageMargin) / ELC_imagesPerLine; \
 })
 
 @interface ELCAssetCell : UITableViewCell
