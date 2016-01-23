@@ -42,7 +42,7 @@
 	for (UIImageView *view in _imageViewArray) {
         [view removeFromSuperview];
 	}
-    for (UIImageView *view in _overlayViewArray) {
+    for (UIView *view in _overlayViewArray) {
         [view removeFromSuperview];
 	}
     //set up a pointer here so we don't keep calling [UIImage imageNamed:] if creating overlays
@@ -60,13 +60,34 @@
         }
         
         if (i < [_overlayViewArray count]) {
-            UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
+            UIView *overlayView = [_overlayViewArray objectAtIndex:i];
             overlayView.hidden = asset.selected ? NO : YES;
         } else {
             if (overlayImage == nil) {
-                overlayImage = [UIImage imageNamed:@"Overlay.png"];
+                overlayImage = [UIImage imageNamed:@"Checkmark.png"];
+                if ([overlayImage respondsToSelector:@selector(imageWithRenderingMode:)]) {
+                    overlayImage = [overlayImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                }
             }
-            UIImageView *overlayView = [[UIImageView alloc] initWithImage:overlayImage];
+            UIView *overlayView = ({
+                CGFloat imageSize = ELC_imageSizeForWidth(CGRectGetWidth(self.bounds));
+                UIImageView *checkmarkView = [[UIImageView alloc] initWithFrame:CGRectMake(imageSize - ELC_checkmarkSize - ELC_checkmarkMargin,
+                                                                                           imageSize - ELC_checkmarkSize - ELC_checkmarkMargin,
+                                                                                           ELC_checkmarkSize,
+                                                                                           ELC_checkmarkSize)];
+                checkmarkView.image = overlayImage;
+                checkmarkView.backgroundColor = [UIColor whiteColor];
+                checkmarkView.layer.borderWidth = 1.0;
+                checkmarkView.layer.borderColor = [UIColor whiteColor].CGColor;
+                checkmarkView.layer.cornerRadius = ELC_checkmarkSize / 2;
+                checkmarkView.layer.masksToBounds = YES;
+                checkmarkView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin
+                                                  | UIViewAutoresizingFlexibleRightMargin);
+                
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, imageSize, imageSize)];
+                [view addSubview:checkmarkView];
+                /* return */ view;
+            });
             [_overlayViewArray addObject:overlayView];
             overlayView.hidden = asset.selected ? NO : YES;
         }
@@ -76,7 +97,7 @@
 - (void)cellTapped:(UITapGestureRecognizer *)tapRecognizer
 {
     CGFloat imageSize = ELC_imageSizeForWidth(CGRectGetWidth(self.bounds));
-	CGRect frame = CGRectMake(ELC_imageMargin, ELC_imageMargin, imageSize, imageSize);
+	CGRect frame = CGRectMake(0, 0, imageSize, imageSize);
 	
     CGPoint point = [tapRecognizer locationInView:self];
     
@@ -84,29 +105,29 @@
         if (CGRectContainsPoint(frame, point)) {
             ELCAsset *asset = [_rowAssets objectAtIndex:i];
             asset.selected = !asset.selected;
-            UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
+            UIView *overlayView = [_overlayViewArray objectAtIndex:i];
             overlayView.hidden = !asset.selected;
             break;
         }
-        frame.origin.x = frame.origin.x + frame.size.width + ELC_imageMargin;
+        frame.origin.x = frame.origin.x + imageSize + ELC_imageMargin;
     }
 }
 
 - (void)layoutSubviews
 {
     CGFloat imageSize = ELC_imageSizeForWidth(CGRectGetWidth(self.bounds));
-    CGRect frame = CGRectMake(ELC_imageMargin, ELC_imageMargin, imageSize, imageSize);
-	
+    CGRect frame = CGRectMake(0, 0, imageSize, imageSize);
+    
 	for (int i = 0; i < [_rowAssets count]; ++i) {
 		UIImageView *imageView = [_imageViewArray objectAtIndex:i];
 		[imageView setFrame:frame];
 		[self addSubview:imageView];
         
-        UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
+        UIView *overlayView = [_overlayViewArray objectAtIndex:i];
         [overlayView setFrame:frame];
         [self addSubview:overlayView];
 		
-		frame.origin.x = frame.origin.x + frame.size.width + ELC_imageMargin;
+		frame.origin.x = frame.origin.x + imageSize + ELC_imageMargin;
 	}
 }
 

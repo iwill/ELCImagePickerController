@@ -8,10 +8,12 @@
 #import <UIKit/UIKit.h>
 
 #define ELC_imagesPerLine   4
-#define ELC_imageMargin     4.0
+#define ELC_imageMargin     1.0
 #define ELC_imageSizeForWidth(viewWidth) ({ \
-    round(viewWidth - (ELC_imagesPerLine + 1) * ELC_imageMargin) / ELC_imagesPerLine; \
+    round(viewWidth - (ELC_imagesPerLine - 1) * ELC_imageMargin) / ELC_imagesPerLine; \
 })
+#define ELC_checkmarkSize   22.0
+#define ELC_checkmarkMargin 4.0
 
 @interface ELCAssetCell : UITableViewCell
 
