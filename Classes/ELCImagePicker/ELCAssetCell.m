@@ -82,7 +82,7 @@
                 checkmarkView.layer.cornerRadius = ELC_checkmarkSize / 2;
                 checkmarkView.layer.masksToBounds = YES;
                 checkmarkView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin
-                                                  | UIViewAutoresizingFlexibleRightMargin);
+                                                  | UIViewAutoresizingFlexibleTopMargin);
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, imageSize, imageSize)];
                 [view addSubview:checkmarkView];
