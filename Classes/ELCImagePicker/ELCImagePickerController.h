@@ -41,7 +41,6 @@
  */
 @property (nonatomic, assign) BOOL returnsOriginalImage;
 
-- (id)initImagePicker;
 - (void)cancelImagePicker;
 
 @end

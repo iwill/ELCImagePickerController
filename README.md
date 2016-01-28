@@ -8,7 +8,7 @@ The image picker is created and displayed in a very similar manner to the `UIIma
 
 ```obj-c
 // Create the image picker
-ELCImagePickerController *imagePicker = [[ELCImagePickerController alloc] initImagePicker];
+ELCImagePickerController *imagePicker = [[ELCImagePickerController alloc] init];
 imagePicker.maximumImagesCount = 4; //Set the maximum number of images to select, defaults to 4
 imagePicker.returnsOriginalImage = NO; //Only return the fullScreenImage, not the fullResolutionImage
 imagePicker.imagePickerDelegate = self;
